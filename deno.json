@@ -1,8 +1,15 @@
 {
   "tasks": {
-    "dev": "deno run --allow-net --allow-read --watch serve.ts"
+    "dev": "deno run --allow-net --allow-read --watch serve.ts",
+    "bundle": "deno run -A --watch=www/ts/ npm:esbuild www/ts/main.ts --bundle --outfile=www/dist/main.js --format=esm --target=es2022"
   },
   "imports": {
     "@std/http": "jsr:@std/http@^1.0.0"
+  },
+  "compilerOptions": {
+    "lib": [
+      "dom",
+      "deno.ns"
+    ]
   }
 }
