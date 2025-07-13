@@ -16,15 +16,18 @@ main {
 }
 
 #exhibits-container {
+  box-sizing: border-box;
   position: absolute;
   top: 0;
   z-index: -1;
   height: 100%;
   width: 100%;
+  padding: 1rem;
   background-color: gainsboro;
 }
 
 #exhibit-canvas {
+  border: 2px solid black;
   height: 100%;
   width: 100%;
 }
