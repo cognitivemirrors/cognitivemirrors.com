@@ -1,36 +1,35 @@
 import Automaton from "./automaton.ts";
+import Strategy from "./strategy.ts";
 
 export default class Env {
   automata: Automaton[];
-  _ctx: CanvasRenderingContext2D;
-  constructor(n: number, ctx: CanvasRenderingContext2D) {
+  strategy: Strategy;
+  private _ctx: CanvasRenderingContext2D;
+
+  constructor(n: number, ctx: CanvasRenderingContext2D, strategy: Strategy) {
     this.automata = new Array<Automaton>();
+    this.strategy = strategy;
     this._ctx = ctx;
+
+    const radius = Math.sqrt(this.width * this.height) *
+      0.02;
+
+    console.log(`Initializing env of size:${this.width}, ${this.height}`);
     for (let i = 0; i < n; i++) {
-      const x = Math.floor(
-        Math.random() * this._ctx.canvas.width * 0.98 +
-          this._ctx.canvas.width * 0.01,
-      );
-      const y = Math.floor(
-        Math.random() * this._ctx.canvas.height * 0.98 +
-          this._ctx.canvas.height * 0.01,
-      );
-      this.automata.push(new Automaton(x, y));
+      const x = Math.floor(Math.random() * (this.width - 2 * radius) + radius);
+      const y = Math.floor(Math.random() * (this.height - 2 * radius) + radius);
+      this.automata.push(new Automaton(x, y, radius));
     }
   }
+  get height() {
+    return this._ctx.canvas.height;
+  }
+
+  get width() {
+    return this._ctx.canvas.width;
+  }
   step() {
-    for (const automata of this.automata) {
-      const choice = Math.random();
-      if (choice < 0.25) {
-        automata.x = Math.min(automata.x + 1, this._ctx.canvas.width);
-      } else if (choice < 0.5) {
-        automata.x = Math.max(automata.x - 1, 0);
-      } else if (choice < 0.75) {
-        automata.y = Math.min(automata.y + 1, this._ctx.canvas.height);
-      } else {
-        automata.y = Math.max(automata.y - 1, 0);
-      }
-    }
+    this.strategy.step(this);
   }
   draw() {
     for (const automaton of this.automata) {
@@ -42,7 +41,7 @@ export default class Env {
     this._ctx.arc(
       automaton.x,
       automaton.y,
-      this._ctx.canvas.width * 0.01,
+      automaton.radius,
       0,
       2 * Math.PI,
     );
