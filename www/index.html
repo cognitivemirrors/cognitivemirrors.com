@@ -9,11 +9,24 @@
 <body>
   <main>
     <div id="app">
-      <div class="greeting">
-        <div class="greeting-first">Welcome to cognitivemirrors</div>
-        <div class="greeting-second">This site is currently under construction</div>
+      <div class="heading">
+        <span class="heading-first">cognitivemirrors</span>
+        <span class="heading-second">by Kevin Chan</span>
       </div>
-      <div id="exhibits-container"></div>
+      <div class="project-exhibit">
+        <h2>cellular automata.</h2>
+        <div>
+          <p>How might individual cells combine to form higher level goals?</p>
+        </div>
+        <div class="exhibits-container">
+          <div class="canvas-title">random walk</div>
+          <canvas class="exhibit-canvas" id="random-walk-canvas"></canvas>
+        </div>
+        <div class="exhibits-container">
+          <div class="canvas-title">pro-social walk</div>
+          <canvas class="exhibit-canvas" id="pro-social-canvas"></canvas>
+        </div>
+      </div>
     </div>
   </main>
   <script src="dist/main.js"></script>
